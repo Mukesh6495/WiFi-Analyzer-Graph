@@ -43,245 +43,70 @@
   </div>
 
   <script>
+    // ---------------------------
     // Example WiFi Data
+    // ---------------------------
     const wifiData = [
-  {
-    "ssid": "HomeWiFi",
-    "bssid": "AA:BB:CC:DD:EE:01",
-    "signal": -45,
-    "channel": 6,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "Neighbor1",
-    "bssid": "AA:BB:CC:DD:EE:02",
-    "signal": -72,
-    "channel": 1,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "GuestNet",
-    "bssid": "AA:BB:CC:DD:EE:03",
-    "signal": -68,
-    "channel": 11,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "SmartHome",
-    "bssid": "AA:BB:CC:DD:EE:04",
-    "signal": -55,
-    "channel": 6,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "IoT_Network",
-    "bssid": "AA:BB:CC:DD:EE:05",
-    "signal": -80,
-    "channel": 3,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "PublicWiFi",
-    "bssid": "AA:BB:CC:DD:EE:06",
-    "signal": -90,
-    "channel": 9,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "OldRouter",
-    "bssid": "AA:BB:CC:DD:EE:07",
-    "signal": -85,
-    "channel": 6,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "CafeSpot",
-    "bssid": "AA:BB:CC:DD:EE:08",
-    "signal": -75,
-    "channel": 1,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "LibraryWiFi",
-    "bssid": "AA:BB:CC:DD:EE:09",
-    "signal": -78,
-    "channel": 11,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "TechLab",
-    "bssid": "AA:BB:CC:DD:EE:10",
-    "signal": -65,
-    "channel": 6,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "FamilyNet",
-    "bssid": "AA:BB:CC:DD:EE:11",
-    "signal": -50,
-    "channel": 11,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "GamingHub",
-    "bssid": "AA:BB:CC:DD:EE:12",
-    "signal": -62,
-    "channel": 6,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "TempGuest",
-    "bssid": "AA:BB:CC:DD:EE:13",
-    "signal": -88,
-    "channel": 1,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "SecurityCam",
-    "bssid": "AA:BB:CC:DD:EE:14",
-    "signal": -92,
-    "channel": 9,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "BackupAP",
-    "bssid": "AA:BB:CC:DD:EE:15",
-    "signal": -70,
-    "channel": 11,
-    "band": "2.4GHz"
-  },
-  {
-    "ssid": "OfficeNet_5G",
-    "bssid": "AA:BB:CC:DD:EE:16",
-    "signal": -60,
-    "channel": 40,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "OfficeNet_Guest",
-    "bssid": "AA:BB:CC:DD:EE:17",
-    "signal": -65,
-    "channel": 36,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Conference_5G",
-    "bssid": "AA:BB:CC:DD:EE:18",
-    "signal": -55,
-    "channel": 149,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "HR_WiFi",
-    "bssid": "AA:BB:CC:DD:EE:19",
-    "signal": -70,
-    "channel": 44,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "DevTeam",
-    "bssid": "AA:BB:CC:DD:EE:20",
-    "signal": -58,
-    "channel": 157,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "MediaServer",
-    "bssid": "AA:BB:CC:DD:EE:21",
-    "signal": -62,
-    "channel": 36,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "VIP_Access",
-    "bssid": "AA:BB:CC:DD:EE:22",
-    "signal": -48,
-    "channel": 149,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "IoT_5G",
-    "bssid": "AA:BB:CC:DD:EE:23",
-    "signal": -75,
-    "channel": 40,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Lab_Test",
-    "bssid": "AA:BB:CC:DD:EE:24",
-    "signal": -80,
-    "channel": 157,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Backhaul",
-    "bssid": "AA:BB:CC:DD:EE:25",
-    "signal": -52,
-    "channel": 44,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Staging",
-    "bssid": "AA:BB:CC:DD:EE:26",
-    "signal": -68,
-    "channel": 149,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Admin_5G",
-    "bssid": "AA:BB:CC:DD:EE:27",
-    "signal": -45,
-    "channel": 36,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "Warehouse",
-    "bssid": "AA:BB:CC:DD:EE:28",
-    "signal": -85,
-    "channel": 157,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "SecureCorp",
-    "bssid": "AA:BB:CC:DD:EE:29",
-    "signal": -72,
-    "channel": 44,
-    "band": "5GHz"
-  },
-  {
-    "ssid": "MeetingRoom",
-    "bssid": "AA:BB:CC:DD:EE:30",
-    "signal": -60,
-    "channel": 40,
-    "band": "5GHz"
-  }
-];
+      { ssid: "HomeWiFi", bssid: "AA:BB:CC:DD:EE:01", signal: -45, channel: 6,   band: "2.4GHz" },
+      { ssid: "Neighbor1", bssid: "AA:BB:CC:DD:EE:02", signal: -72, channel: 1,   band: "2.4GHz" },
+      { ssid: "GuestNet",  bssid: "AA:BB:CC:DD:EE:03", signal: -68, channel: 11,  band: "2.4GHz" },
+      { ssid: "SmartHome", bssid: "AA:BB:CC:DD:EE:04", signal: -55, channel: 6,   band: "2.4GHz" },
+      { ssid: "IoT_Network", bssid: "AA:BB:CC:DD:EE:05", signal: -80, channel: 3, band: "2.4GHz" },
+      { ssid: "PublicWiFi", bssid: "AA:BB:CC:DD:EE:06", signal: -90, channel: 9,  band: "2.4GHz" },
+      { ssid: "OldRouter",  bssid: "AA:BB:CC:DD:EE:07", signal: -85, channel: 6,  band: "2.4GHz" },
+      { ssid: "CafeSpot",   bssid: "AA:BB:CC:DD:EE:08", signal: -75, channel: 1,  band: "2.4GHz" },
+      { ssid: "LibraryWiFi", bssid: "AA:BB:CC:DD:EE:09", signal: -78, channel: 11, band: "2.4GHz" },
+      { ssid: "TechLab",    bssid: "AA:BB:CC:DD:EE:10", signal: -65, channel: 6,  band: "2.4GHz" },
+      { ssid: "FamilyNet",  bssid: "AA:BB:CC:DD:EE:11", signal: -50, channel: 11, band: "2.4GHz" },
+      { ssid: "GamingHub",  bssid: "AA:BB:CC:DD:EE:12", signal: -62, channel: 6,  band: "2.4GHz" },
+      { ssid: "TempGuest",  bssid: "AA:BB:CC:DD:EE:13", signal: -88, channel: 1,  band: "2.4GHz" },
+      { ssid: "SecurityCam", bssid: "AA:BB:CC:DD:EE:14", signal: -92, channel: 9, band: "2.4GHz" },
+      { ssid: "BackupAP",   bssid: "AA:BB:CC:DD:EE:15", signal: -70, channel: 11, band: "2.4GHz" },
+      { ssid: "OfficeNet_5G", bssid: "AA:BB:CC:DD:EE:16", signal: -60, channel: 40, band: "5GHz" },
+      { ssid: "OfficeNet_Guest", bssid: "AA:BB:CC:DD:EE:17", signal: -65, channel: 36, band: "5GHz" },
+      { ssid: "Conference_5G",  bssid: "AA:BB:CC:DD:EE:18", signal: -55, channel: 149, band: "5GHz" },
+      { ssid: "HR_WiFi",        bssid: "AA:BB:CC:DD:EE:19", signal: -70, channel: 44,  band: "5GHz" },
+      { ssid: "DevTeam",        bssid: "AA:BB:CC:DD:EE:20", signal: -58, channel: 157, band: "5GHz" },
+      { ssid: "MediaServer",    bssid: "AA:BB:CC:DD:EE:21", signal: -62, channel: 36,  band: "5GHz" },
+      { ssid: "VIP_Access",     bssid: "AA:BB:CC:DD:EE:22", signal: -48, channel: 149, band: "5GHz" },
+      { ssid: "IoT_5G",         bssid: "AA:BB:CC:DD:EE:23", signal: -75, channel: 40,  band: "5GHz" },
+      { ssid: "Lab_Test",       bssid: "AA:BB:CC:DD:EE:24", signal: -80, channel: 157, band: "5GHz" },
+      { ssid: "Backhaul",       bssid: "AA:BB:CC:DD:EE:25", signal: -52, channel: 44,  band: "5GHz" },
+      { ssid: "Staging",        bssid: "AA:BB:CC:DD:EE:26", signal: -68, channel: 149, band: "5GHz" },
+      { ssid: "Admin_5G",       bssid: "AA:BB:CC:DD:EE:27", signal: -45, channel: 36,  band: "5GHz" },
+      { ssid: "Warehouse",      bssid: "AA:BB:CC:DD:EE:28", signal: -85, channel: 157, band: "5GHz" },
+      { ssid: "SecureCorp",     bssid: "AA:BB:CC:DD:EE:29", signal: -72, channel: 44,  band: "5GHz" },
+      { ssid: "MeetingRoom",    bssid: "AA:BB:CC:DD:EE:30", signal: -60, channel: 40,  band: "5GHz" }
+    ];
 
-    // Convert channel → frequency
-    function channelToFrequency(channel, band="2.4GHz") {
+    // ---------------------------
+    // Helpers
+    // ---------------------------
+    function channelToFrequency(channel, band = "2.4GHz") {
       if (band === "2.4GHz") return 2407 + channel * 5;
       if (band === "5GHz") return 5000 + channel * 5;
       return 0;
     }
 
-    // Gaussian curve
     function gaussian(x, mean, sigma, peak) {
       return peak * Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2));
     }
 
     // Frequency labels
     const freqLabels24 = [];
-    for (let f = 2400; f <= 2500; f++) freqLabels24.push(f);
+    for (let f = 2400; f <= 2500; f += 3) freqLabels24.push(f);
 
     const freqLabels5 = [];
     for (let f = 5180; f <= 5320; f += 20) freqLabels5.push(f);
 
+    // ---------------------------
     // Dataset generator
+    // ---------------------------
     function generateDataset(network, freqLabels) {
       const center = channelToFrequency(network.channel, network.band);
-      const data = [];
       const sigma = 7;
       const peak = Math.abs(network.signal);
+      const data = freqLabels.map(f => -gaussian(f, center, sigma, peak));
 
       let borderColor, backgroundColor;
       if (network.signal > -60) {
@@ -295,16 +120,11 @@
         backgroundColor = "rgba(255,0,0,0.2)";
       }
 
-      for (let i = 0; i < freqLabels.length; i++) {
-        let x = freqLabels[i];
-        data.push(-gaussian(x, center, sigma, peak));
-      }
-
       return {
         label: network.ssid,
-        data: data,
-        borderColor: borderColor,
-        backgroundColor: backgroundColor,
+        data,
+        borderColor,
+        backgroundColor,
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
@@ -313,24 +133,23 @@
       };
     }
 
-    // 2.4GHz datasets
-    const datasets24 = wifiData
-      .filter(net => net.band === "2.4GHz")
-      .map(net => generateDataset(net, freqLabels24));
+    // Build datasets
+    const datasets24 = wifiData.filter(net => net.band === "2.4GHz")
+                               .map(net => generateDataset(net, freqLabels24));
 
-    // 5GHz datasets
-    const datasets5 = wifiData
-      .filter(net => net.band === "5GHz")
-      .map(net => generateDataset(net, freqLabels5));
+    const datasets5 = wifiData.filter(net => net.band === "5GHz")
+                              .map(net => generateDataset(net, freqLabels5));
 
+    // ---------------------------
     // Chart builder
+    // ---------------------------
     function buildChart(canvasId, freqLabels, datasets) {
       new Chart(document.getElementById(canvasId), {
         type: "line",
-        data: { labels: freqLabels, datasets: datasets },
+        data: { labels: freqLabels, datasets },
         options: {
           responsive: true,
-          interaction: { mode: 'nearest', intersect: false },
+          interaction: { mode: "nearest", intersect: false },
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -361,7 +180,9 @@
       });
     }
 
-    // Render both charts
+    // ---------------------------
+    // Render charts
+    // ---------------------------
     buildChart("wifiChart24", freqLabels24, datasets24);
     buildChart("wifiChart5", freqLabels5, datasets5);
   </script>
