@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WiFi Bell Curve Graph</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .chart-box {
+      flex: 1 1 450px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    canvas {
+      width: 100%;
+      height: 350px;
+    }
+    .tooltip {
+      position: absolute;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      z-index: 10;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <h2>📡 WiFi Channel Graphs</h2>
+  <div class="charts">
+    <div class="chart-box">
+      <h3>2.4 GHz</h3>
+      <canvas id="chart24" width="600" height="350"></canvas>
+      <div class="tooltip" id="tooltip24"></div>
+    </div>
+    <div class="chart-box">
+      <h3>5 GHz</h3>
+      <canvas id="chart5" width="600" height="350"></canvas>
+      <div class="tooltip" id="tooltip5"></div>
+    </div>
+  </div>
+
+  <script>
+    const wifiData = [
+      { ssid: "HomeWiFi", bssid: "AA:BB:CC:DD:EE:01", signal: -45, channel: 6,   band: "2.4GHz" },
+      { ssid: "Neighbor1", bssid: "AA:BB:CC:DD:EE:02", signal: -72, channel: 1,   band: "2.4GHz" },
+      { ssid: "GuestNet",  bssid: "AA:BB:CC:DD:EE:03", signal: -68, channel: 11,  band: "2.4GHz" },
+      { ssid: "SmartHome", bssid: "AA:BB:CC:DD:EE:04", signal: -55, channel: 6,   band: "2.4GHz" },
+      { ssid: "IoT_Network", bssid: "AA:BB:CC:DD:EE:05", signal: -80, channel: 3, band: "2.4GHz" },
+      { ssid: "PublicWiFi", bssid: "AA:BB:CC:DD:EE:06", signal: -90, channel: 9,  band: "2.4GHz" },
+      { ssid: "OldRouter",  bssid: "AA:BB:CC:DD:EE:07", signal: -85, channel: 6,  band: "2.4GHz" },
+      { ssid: "CafeSpot",   bssid: "AA:BB:CC:DD:EE:08", signal: -75, channel: 1,  band: "2.4GHz" },
+      { ssid: "LibraryWiFi", bssid: "AA:BB:CC:DD:EE:09", signal: -78, channel: 11, band: "2.4GHz" },
+      { ssid: "TechLab",    bssid: "AA:BB:CC:DD:EE:10", signal: -65, channel: 6,  band: "2.4GHz" },
+      { ssid: "FamilyNet",  bssid: "AA:BB:CC:DD:EE:11", signal: -50, channel: 11, band: "2.4GHz" },
+      { ssid: "GamingHub",  bssid: "AA:BB:CC:DD:EE:12", signal: -62, channel: 6,  band: "2.4GHz" },
+      { ssid: "TempGuest",  bssid: "AA:BB:CC:DD:EE:13", signal: -88, channel: 1,  band: "2.4GHz" },
+      { ssid: "SecurityCam", bssid: "AA:BB:CC:DD:EE:14", signal: -92, channel: 9, band: "2.4GHz" },
+      { ssid: "BackupAP",   bssid: "AA:BB:CC:DD:EE:15", signal: -70, channel: 11, band: "2.4GHz" },
+      { ssid: "OfficeNet_5G", bssid: "AA:BB:CC:DD:EE:16", signal: -60, channel: 40, band: "5GHz" },
+      { ssid: "OfficeNet_Guest", bssid: "AA:BB:CC:DD:EE:17", signal: -65, channel: 36, band: "5GHz" },
+      { ssid: "Conference_5G",  bssid: "AA:BB:CC:DD:EE:18", signal: -55, channel: 149, band: "5GHz" },
+      { ssid: "HR_WiFi",        bssid: "AA:BB:CC:DD:EE:19", signal: -70, channel: 44,  band: "5GHz" },
+      { ssid: "DevTeam",        bssid: "AA:BB:CC:DD:EE:20", signal: -58, channel: 157, band: "5GHz" },
+      { ssid: "MediaServer",    bssid: "AA:BB:CC:DD:EE:21", signal: -62, channel: 36,  band: "5GHz" },
+      { ssid: "VIP_Access",     bssid: "AA:BB:CC:DD:EE:22", signal: -48, channel: 149, band: "5GHz" },
+      { ssid: "IoT_5G",         bssid: "AA:BB:CC:DD:EE:23", signal: -75, channel: 40,  band: "5GHz" },
+      { ssid: "Lab_Test",       bssid: "AA:BB:CC:DD:EE:24", signal: -80, channel: 157, band: "5GHz" },
+      { ssid: "Backhaul",       bssid: "AA:BB:CC:DD:EE:25", signal: -52, channel: 44,  band: "5GHz" },
+      { ssid: "Staging",        bssid: "AA:BB:CC:DD:EE:26", signal: -68, channel: 149, band: "5GHz" },
+      { ssid: "Admin_5G",       bssid: "AA:BB:CC:DD:EE:27", signal: -45, channel: 36,  band: "5GHz" },
+      { ssid: "Warehouse",      bssid: "AA:BB:CC:DD:EE:28", signal: -85, channel: 157, band: "5GHz" },
+      { ssid: "SecureCorp",     bssid: "AA:BB:CC:DD:EE:29", signal: -72, channel: 44,  band: "5GHz" },
+      { ssid: "MeetingRoom",    bssid: "AA:BB:CC:DD:EE:30", signal: -60, channel: 40,  band: "5GHz" }
+    ];
+
+    function channelToFrequency(channel, band) {
+      if (band === "2.4GHz") return 2407 + channel * 5;
+      if (band === "5GHz") return 5000 + channel * 5;
+    }
+
+    function gaussian(x, mean, sigma, peak) {
+      return peak * Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2));
+    }
+
+    function drawChart(canvasId, tooltipId, band, minF, maxF) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext("2d");
+      const tooltip = document.getElementById(tooltipId);
+
+      const width = canvas.width;
+      const height = canvas.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const padding = { left: 60, right: 20, top: 20, bottom: 40 };
+      const minSignal = 0;
+      const maxSignal = -100;
+
+      function xScale(freq) {
+        return padding.left + (freq - minF) / (maxF - minF) * (width - padding.left - padding.right);
+      }
+      function yScale(signal) {
+        return height - padding.bottom - (signal - minSignal) / (maxSignal - minSignal) * (height - padding.top - padding.bottom);
+      }
+
+      // axes
+      ctx.strokeStyle = "#333";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, padding.top);
+      ctx.lineTo(padding.left, height - padding.bottom);
+      ctx.lineTo(width - padding.right, height - padding.bottom);
+      ctx.stroke();
+
+      ctx.fillStyle = "#000";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "center";
+      const stepX = 20; // MHz step
+      for (let f = minF; f <= maxF; f += stepX) {
+        const x = xScale(f);
+        ctx.beginPath();
+        ctx.moveTo(x, height - padding.bottom);
+        ctx.lineTo(x, height - padding.bottom + 5);
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(x, height - padding.bottom + 18);
+        ctx.rotate(-Math.PI / 6);
+        ctx.textAlign = "right";
+        ctx.fillText(f, 0, 0);
+        ctx.restore();
+      }
+      ctx.fillText("Frequency (MHz)", (width / 2), height - 0);
+
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      const yTicks = [0, -20, -40, -60, -80, -100];
+      yTicks.forEach(s => {
+        const y = yScale(s);
+        ctx.beginPath();
+        ctx.moveTo(padding.left - 5, y);
+        ctx.lineTo(padding.left, y);
+        ctx.stroke();
+        ctx.fillText(s, padding.left - 8, y);
+
+        ctx.strokeStyle = "#ddd";
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(width - padding.right, y);
+        ctx.stroke();
+        ctx.strokeStyle = "#333";
+      });
+
+      ctx.save();
+      ctx.translate(15, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center";
+      ctx.fillText("Signal Strength (dBm)", 0, 0);
+      ctx.restore();
+
+      // draw networks as bell curves
+      const networks = wifiData.filter(n => n.band === band);
+      const curves = [];
+
+      networks.forEach((net) => {
+        const mean = channelToFrequency(net.channel, band);
+        const sigma = (band === "2.4GHz" ? 12 : 15);
+        const peak = 1;
+
+        let strokeColor = "rgba(0,128,0,0.5)";
+        if (net.signal <= -75) strokeColor = "rgba(255,165,0,0.5)";
+        else if (net.signal <= -60) strokeColor = "rgba(255,0,0,0.5)";
+
+        let fillColor = "rgba(0, 128, 0, 0.2)";
+        if (strokeColor === "rgba(255,0,0,0.5)") fillColor = "rgba(255, 165, 0, 0.2)";
+        if (strokeColor === "rgba(255,165,0,0.5)") fillColor = "rgba(255, 0, 0, 0.2)";
+
+        ctx.beginPath();
+        const curvePoints = [];
+        for (let f = minF; f <= maxF; f += 0.5) {
+          const x = xScale(f);
+          const curve = gaussian(f, mean, sigma, peak);
+          const y = yScale(net.signal * curve + (minSignal - 5) * (1 - curve));
+          curvePoints.push({x, y});
+          if (f === minF) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.lineTo(xScale(maxF), height - padding.bottom);
+        ctx.lineTo(xScale(minF), height - padding.bottom);
+        ctx.closePath();
+
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        curves.push({net, points: curvePoints});
+      });
+
+      // mouse hover tooltip
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        let found = null;
+
+        curves.forEach(curve => {
+          curve.points.forEach(pt => {
+            if (Math.abs(pt.x - mouseX) < 5 && Math.abs(pt.y - mouseY) < 10) {
+              found = curve.net;
+            }
+          });
+        });
+
+        if (found) {
+          tooltip.style.display = "block";
+          tooltip.style.left = e.offsetX + 15 + "px";
+          tooltip.style.top = e.offsetY + "px";
+          tooltip.innerHTML = `
+            <strong>${found.ssid}</strong><br>
+            Signal: ${found.signal} dBm<br>
+            Channel: ${found.channel}<br>
+            BSSID: ${found.bssid}
+          `;
+        } else {
+          tooltip.style.display = "none";
+        }
+      });
+    }
+
+    drawChart("chart24", "tooltip24", "2.4GHz", 2400, 2500);
+    drawChart("chart5", "tooltip5", "5GHz", 5180, 5820);
+  </script>
+</body>
+</html>
